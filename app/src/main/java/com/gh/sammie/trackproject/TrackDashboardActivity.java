@@ -49,8 +49,8 @@ public class TrackDashboardActivity extends AppCompatActivity {
 //                    Books.class)
 //            .build();
 
-    .setQuery(FirebaseDatabase.getInstance().getReference().child("Goods").child(Common.currentUser.getUid()),
-            Goods.class)
+            .setQuery(FirebaseDatabase.getInstance().getReference().child("Goods").child(Common.currentUser.getUid()),
+                    Goods.class)
             .build();
 
     private FirebaseRecyclerAdapter<Goods, GoodsViewHolder> adapter = new FirebaseRecyclerAdapter<Goods, GoodsViewHolder>(options) {
@@ -66,16 +66,12 @@ public class TrackDashboardActivity extends AppCompatActivity {
             viewHolder.txtBooktName.setText(bookTitle);
 //            viewHolder.txtBooktName.setTextSize(20);
 
-            viewHolder.itemPrice.setText(model.getPrice());
+            viewHolder.itemPrice.setText("Clearance Charge:" + model.getPrice());
+
             Picasso.get().load(model.getImage())
                     .into(viewHolder.bookImageView);
 
-//            TextDrawable drawablePrice = TextDrawable.builder()
-//                    .buildRoundRect("free", Color.RED, 10); // radius in px
-//            viewHolder.itemPrice.setImageDrawable(drawablePrice);
-
             viewHolder.setItemClickListener((view, position1, isLongClick) -> {
-
 //                    Get category id and send to new activity
                 Intent list = new Intent(TrackDashboardActivity.this, FreebiesBookDetail.class);
 //                    Common.currentRestaurant = clickItem;
@@ -123,7 +119,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
 //        refreshButton = findViewById(R.id.btn_refresh);
 
         /*Load Goods*/
-        loadBooks();
+        loadGoods();
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.card1,
                 R.color.colorButtonPress);
@@ -131,7 +127,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             //add layout viewing no Data
             if (Common.isConnectedToInternet(this)) {
-                loadBooks();
+                loadGoods();
             } else {
                 errorSweetDialog();
 
@@ -146,7 +142,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
     }
 
 
-    private void loadBooks() {
+    private void loadGoods() {
         adapter.startListening();
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setRefreshing(false);
@@ -177,7 +173,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
         if (pDialog != null)
             if (pDialog.isShowing())
                 pDialog.dismiss();
-                   pDialog = null;
+        pDialog = null;
     }
 
     private void showDialog() {
