@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
                     pdialog.setCanceledOnTouchOutside(false);
                     pdialog.setCancelable(false);
                     pdialog.show();
-                    createuser(mail, cnfpwd, name,newPass);
+                    createuser(mail, cnfpwd, name, newPass);
                 }
             }
         });
@@ -166,14 +166,34 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("name", name);
         user.put("email", email);
         user.put("pwd", password);
+        user.put("phone", "02412121200");
+        user.put("uid", current_user.getUid());
 
         mDatabase.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
                 if (task.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "Moving you to User DashBoard", Toast.LENGTH_SHORT).show();
                     moveToDashBoard();
+                    Toast.makeText(RegisterActivity.this, "Moving you to User DashBoard", Toast.LENGTH_SHORT).show();
+//                    mDatabase.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            User user = snapshot.child(current_user.getUid()).getValue(User.class);
+//                            Common.currentUser = user;
+//                            Intent mainIntent = new Intent(RegisterActivity.this, UserDashboardActivity.class);
+//                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                            startActivity(mainIntent);
+//                            finish();
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+
+//                    moveToDashBoard();
 
                 } else
                     responseErrorSweetDialog("🤷‍♂️Oops🤷‍♂", "Something went wrong please try again");
