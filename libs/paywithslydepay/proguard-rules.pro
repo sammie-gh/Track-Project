@@ -1,3 +1,0 @@
- -keepattributes Signature
- -keepclassmembers  class com.apps.norris.paywithslydepay.models.**{*; }
- -keepnames  class com.apps.norris.paywithslydepay.models.**{*; }

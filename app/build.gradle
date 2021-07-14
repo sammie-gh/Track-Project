@@ -39,19 +39,13 @@ dependencies {
     // Import the BoM for the Firebase platform
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
 
-    implementation 'com.airbnb.android:lottie:3.4.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
     implementation 'com.google.firebase:firebase-messaging'
-//    implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-        implementation project(':libs:paywithslydepay')
 }
 
 apply plugin: 'com.android.application'
