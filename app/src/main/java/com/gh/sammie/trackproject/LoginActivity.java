@@ -12,11 +12,16 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gh.sammie.trackproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -76,7 +81,24 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                moveToDashBoard();
+                                mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+                                mDatabase.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        User user = snapshot.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
+                                        Log.d("LOGIN", "onDataChange: "+user.getName() + user.getUid());
+                                        Intent mainIntent = new Intent(LoginActivity.this, UserDashboardActivity.class);
+                                        Common.currentUser = user;
+                                        startActivity(mainIntent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
                                 pdialog.dismiss();
                             } else {
                                 String message = task.getException().toString();

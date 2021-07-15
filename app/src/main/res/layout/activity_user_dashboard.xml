@@ -9,11 +9,12 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"        android:scaleType="fitXY"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/toppy" />
+        app:srcCompat="@drawable/top_background_profile" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
             android:layout_marginStart="32dp"
-            android:text="Pay for your goods"
+            android:text="Pay for your \n goods"
             android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -106,6 +107,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/btn_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
@@ -113,21 +115,21 @@
                 android:orientation="vertical">
 
                 <ImageView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/icon_1" />
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Menu1"
-                    android:textAlignment="center" />
+                    android:text="Profile"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/btn_track"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
@@ -135,18 +137,17 @@
                 android:orientation="vertical">
 
                 <ImageView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/icon_2" />
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Menu2"
-                    android:textAlignment="center" />
+                    android:text="Track"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,10 +155,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
+                android:onClick="ImporterClick"
                 android:orientation="vertical">
 
                 <ImageView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/icon_3" />
@@ -167,8 +168,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Menu3"
-                    android:textAlignment="center" />
+                    android:text="Importer"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
         </TableRow>
 
@@ -181,10 +183,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
+                android:onClick="exporterClick"
                 android:orientation="vertical">
 
                 <ImageView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/icon_4" />
@@ -194,8 +196,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Menu4"
-                    android:textAlignment="center" />
+                    android:text="Exporter"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -203,10 +206,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
+                android:onClick="feedbackClick"
                 android:orientation="vertical">
 
                 <ImageView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/icon_5" />
@@ -216,8 +219,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Menu5"
-                    android:textAlignment="center" />
+                    android:text="Feedback"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -225,6 +229,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
+                android:onClick="expressServiceClick"
                 android:orientation="vertical">
 
                 <ImageView
@@ -238,8 +243,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Menu6"
-                    android:textAlignment="center" />
+                    android:text="Express Service"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
         </TableRow>
 
@@ -256,7 +262,7 @@
         app:srcCompat="@drawable/bottom_background" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/img_track_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
@@ -267,25 +273,25 @@
 
     <ImageView
         android:id="@+id/img_sign_out"
-        android:onClick="LogoutUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView8"
+        android:onClick="LogoutUser"
+        app:layout_constraintEnd_toStartOf="@+id/img_track_btn"
         app:layout_constraintHorizontal_bias="0.404"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/img_track_btn"
         app:srcCompat="@drawable/btn1" />
 
     <ImageView
-        android:layout_width="wrap_content"
         android:id="@+id/love_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:onClick="LikeBtnFunction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.634"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/img_track_btn"
+        app:layout_constraintTop_toTopOf="@+id/img_track_btn"
         app:srcCompat="@drawable/btn3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

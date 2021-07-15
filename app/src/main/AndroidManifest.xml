@@ -3,13 +3,20 @@
     package="com.gh.sammie.trackproject">
 
     <application
+        android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackProject">
-        <activity android:name=".UserDashboardActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".GoodsDetailPage" />
+        <activity
+            android:name=".TrackDashboardActivity"
+            android:parentActivityName=".UserDashboardActivity" />
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".UserDashboardActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

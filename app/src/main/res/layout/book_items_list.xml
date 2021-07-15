@@ -52,21 +52,48 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/item_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:gravity="center_horizontal"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="TrackId"
-                        android:textAllCaps="true"
-                        android:fontFamily="@font/baloo"
-                        android:textColor="@color/red"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/item_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/baloo"
+                            android:gravity="center_horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="TrackId"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:background="@drawable/button"
+                            android:backgroundTint="@color/bg_screen4"
+                            android:fontFamily="@font/baloo"
+                            android:gravity="center_horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="description"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/txt_status"
@@ -74,12 +101,12 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/item_title"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/baloo"
                         android:gravity="center_horizontal"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
                         android:text="status"
-                        android:fontFamily="@font/baloo"
                         android:textColor="@color/textColor"
                         android:textSize="16sp" />
 
@@ -89,10 +116,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txt_status"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/baloo"
                         android:gravity="center_horizontal"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:fontFamily="@font/baloo"
                         android:paddingBottom="5dp"
                         android:text="date arrived"
                         android:textColor="@color/textColor"
@@ -103,12 +130,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/baloo"
+                        android:drawableStart="@drawable/btn2"
                         android:gravity="center_horizontal"
                         android:paddingLeft="5dp"
+                        android:drawablePadding="10dp"
+                        android:padding="5dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
                         android:text="location"
-                        android:fontFamily="@font/baloo"
                         android:textColor="@color/textColor"
                         android:textSize="16sp" />
 
@@ -119,6 +149,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -141,13 +175,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:fontFamily="@font/baloo"
                         android:gravity="center_horizontal"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
                         android:text="Terminal: Golden"
-                        android:textColor="@color/textColor"
-                        android:textSize="16sp"
+                        android:textColor="@color/yellow"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -156,16 +191,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:alpha=".87"
+                        android:fontFamily="@font/baloo"
                         android:maxLines="1"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/baloo"
                         android:singleLine="true"
                         android:text="Clearance Charge: GHS 200"
                         android:textAllCaps="true"
                         android:textColor="@color/green"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -175,6 +210,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -202,11 +242,11 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/baloo"
                             android:gravity="center_horizontal"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
-                            android:fontFamily="@font/baloo"
                             android:text="Days"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -216,11 +256,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:alpha=".87"
+                            android:fontFamily="@font/baloo"
                             android:maxLines="1"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
-                            android:fontFamily="@font/baloo"
                             android:singleLine="true"
                             android:text="UT.Pnty"
                             android:textSize="16sp"
@@ -232,9 +272,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:alpha=".87"
+                            android:fontFamily="@font/baloo"
                             android:maxLines="1"
                             android:paddingLeft="5dp"
-                            android:fontFamily="@font/baloo"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
                             android:singleLine="true"
@@ -251,12 +291,13 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/txt_days"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/baloo"
                             android:gravity="center_horizontal"
                             android:paddingLeft="5dp"
-                            android:fontFamily="@font/baloo"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
                             android:text="10"
@@ -264,14 +305,15 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txt_pnty"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:alpha=".87"
+                            android:fontFamily="@font/baloo"
                             android:maxLines="1"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
-                            android:fontFamily="@font/baloo"
                             android:paddingBottom="5dp"
                             android:singleLine="true"
                             android:text="1000"
@@ -280,11 +322,12 @@
 
 
                         <TextView
+                            android:id="@+id/txt_TTcost"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:maxLines="1"
                             android:fontFamily="@font/baloo"
+                            android:maxLines="1"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
@@ -293,8 +336,18 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
+
                     </LinearLayout>
 
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/btn_pay"-->
+                    <!--                        android:layout_width="320dp"-->
+                    <!--                        android:layout_height="55dp"-->
+                    <!--                        android:layout_gravity="center"-->
+                    <!--                        android:background="@drawable/button"-->
+                    <!--                        android:visibility="gone"-->
+                    <!--                        android:text="Click Here To Pay"-->
+                    <!--                        android:textColor="#fff" />-->
 
                 </LinearLayout>
 

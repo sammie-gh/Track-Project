@@ -23,7 +23,6 @@ import com.gh.sammie.trackproject.ViewHolder.GoodsViewHolder;
 import com.gh.sammie.trackproject.model.Goods;
 import com.gh.sammie.trackproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -33,15 +32,16 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class TrackDashboardActivity extends AppCompatActivity {
     private Button refreshButton;
-    private String current_user_id = "";
+    private String current_user_id = "", CurrentGoodName;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FirebaseAuth mAuth;
     private User user_info;
-    private DatabaseReference mUserDatabase;
-    private FirebaseDatabase database;
+    private Goods currentBook;
     private SweetAlertDialog pDialog;
-
+    private String currentPrice;
+    private static final int MY_PERMISSIONS_REQUEST_STORAGE = 1;
+    public static final int SLYDEPAY_REQUEST_CODE = 9999;
 
     private FirebaseRecyclerOptions<Goods> options = new FirebaseRecyclerOptions.Builder<Goods>()
 
@@ -57,26 +57,41 @@ public class TrackDashboardActivity extends AppCompatActivity {
         @Override
         protected void onBindViewHolder(@NonNull GoodsViewHolder viewHolder, int position, @NonNull final Goods model) {
 
+            //get values from model
             String bookTitle = model.getName().trim();
-            if (bookTitle.length() > 12) {
+            if (bookTitle.length() > 20) {
                 bookTitle = bookTitle.substring(0, 12);
                 bookTitle = bookTitle + "...";
             } else bookTitle = model.getName().trim();
 
             viewHolder.txtBooktName.setText(bookTitle);
+            viewHolder.txtDescription.setText(model.getDescription());
 //            viewHolder.txtBooktName.setTextSize(20);
 
-            viewHolder.itemPrice.setText("Clearance Charge:" + model.getPrice());
+            viewHolder.item_price.setText("Clearance Charge: ₵ " + model.getPrice());
+            viewHolder.txt_status.setText("status: " + model.getStatus());
+            viewHolder.txt_location.setText(model.getLocation());
+            viewHolder.txt_date.setText("Container Arrived on: " + model.getDate());
+            viewHolder.txt_terminal.setText("Terminal: " + model.getTerminal());
+            Picasso.get().load(model.getImage()).into(viewHolder.bookImageView);
 
-            Picasso.get().load(model.getImage())
-                    .into(viewHolder.bookImageView);
+//            TextDrawable drawablePrice = TextDrawable.builder()
+//                    .buildRoundRect("free", Color.RED, 10); // radius in px
+//            viewHolder.itemPrice.setImageDrawable(drawablePrice);
+
+//            viewHolder.btn_pay.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////                    slydePayment(model.getPrice(), model.getName(), model.getDestination());
+//
+//                }
+//            });
 
             viewHolder.setItemClickListener((view, position1, isLongClick) -> {
 //                    Get category id and send to new activity
-                Intent list = new Intent(TrackDashboardActivity.this, FreebiesBookDetail.class);
-//                    Common.currentRestaurant = clickItem;
-//                    Common.restaurant_selected = adapter.getRef(position).getKey();
+                Intent list = new Intent(TrackDashboardActivity.this, GoodsDetailPage.class);
                 list.putExtra("BookIdFree", adapter.getRef(position1).getKey());
+//                finish();
                 startActivity(list);
             });
 
@@ -107,6 +122,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
 
         //Init
         mAuth = FirebaseAuth.getInstance();
+
         swipeRefreshLayout = findViewById(R.id.swipeHomeLayout);
         recyclerView = findViewById(R.id.recycler_books);
         // assigning ID of the toolbar to a variable
@@ -119,15 +135,15 @@ public class TrackDashboardActivity extends AppCompatActivity {
 //        refreshButton = findViewById(R.id.btn_refresh);
 
         /*Load Goods*/
-        loadGoods();
+        loadBooks();
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.card1,
+        swipeRefreshLayout.setColorSchemeResources(R.color.card2, R.color.card1,
                 R.color.colorButtonPress);
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             //add layout viewing no Data
             if (Common.isConnectedToInternet(this)) {
-                loadGoods();
+                loadBooks();
             } else {
                 errorSweetDialog();
 
@@ -139,10 +155,11 @@ public class TrackDashboardActivity extends AppCompatActivity {
                 R.anim.layot_fall_down);
         recyclerView.setLayoutAnimation(controller);
 
+
     }
 
 
-    private void loadGoods() {
+    private void loadBooks() {
         adapter.startListening();
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setRefreshing(false);
@@ -192,4 +209,75 @@ public class TrackDashboardActivity extends AppCompatActivity {
                 .setContentText("Something went wrong! \n Please check Your connection")
                 .show();
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == SLYDEPAY_REQUEST_CODE && data != null) {
+//            if (resultCode == RESULT_OK) {
+//                //change access
+//                savePurchaseValueToDatabase();
+//
+//            } else if (resultCode == Activity.RESULT_CANCELED) {
+//                Toast.makeText(TrackDashboardActivity.this, "Payment failed", Toast.LENGTH_SHORT).show();
+//
+//
+//            } else if (resultCode == Activity.RESULT_FIRST_USER)
+//                Toast.makeText(TrackDashboardActivity.this, "Payment was cancelled by user", Toast.LENGTH_SHORT).show();
+//
+//
+//        }
+//
+//
+//    }
+
+
+//    private void getBookDetail(String bookId) {
+//        DBpay.child(bookId).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                currentBook = dataSnapshot.getValue(Goods.class);
+//
+// ;
+//
+//                book_price.setText("₵" + currentBook.getPrice());
+//                book_name.setText(currentBook.getName());
+//                book_description.setText(currentBook.getDescription());
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseErro
+//            r databaseError) {
+//
+//            }
+//        });
+//    }
+
+//    private void savePurchaseValueToDatabase() {
+//        DBpay = database.getReference().child("Goods").child(mAuth.getCurrentUser().getUid());
+////        mUserDatabase = database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+////        database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+//        DBpay.child("TRACK ID").child("Payment").child(mAuth.getCurrentUser().getUid())
+//                .setValue("PAID")
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+////                        successPaymentSweetDialog("Payment verified successfully !");
+//
+//                    }
+//
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//                Toast.makeText(TrackDashboardActivity.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//    }
+
+
 }

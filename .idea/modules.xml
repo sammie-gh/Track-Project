@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Track_Project.iml" filepath="$PROJECT_DIR$/.idea/modules/Track_Project.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Track_Project.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Track_Project.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libs/Track_Project.libs.iml" filepath="$PROJECT_DIR$/.idea/modules/libs/Track_Project.libs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libs/paywithslydepay/Track_Project.libs.paywithslydepay.iml" filepath="$PROJECT_DIR$/.idea/modules/libs/paywithslydepay/Track_Project.libs.paywithslydepay.iml" />
     </modules>
   </component>
 </project>
