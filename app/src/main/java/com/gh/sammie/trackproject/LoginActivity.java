@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d("LOGIN", "onDataChange: "+user.getName() + user.getUid());
                                         Intent mainIntent = new Intent(LoginActivity.this, UserDashboardActivity.class);
                                         Common.currentUser = user;
+                                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(mainIntent);
                                         finish();
                                     }

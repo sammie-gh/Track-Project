@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.gh.sammie.trackproject.ViewHolder.GoodsViewHolder;
@@ -38,9 +41,11 @@ public class TrackDashboardActivity extends AppCompatActivity {
     private User user_info;
     private Goods currentBook;
     private SweetAlertDialog pDialog;
+    private RelativeLayout layout;
     private String currentPrice;
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 1;
     public static final int SLYDEPAY_REQUEST_CODE = 9999;
+    private LottieAnimationView animationView;
 
     private FirebaseRecyclerOptions<Goods> options = new FirebaseRecyclerOptions.Builder<Goods>()
 
@@ -107,6 +112,18 @@ public class TrackDashboardActivity extends AppCompatActivity {
         @Override
         public void onDataChanged() {
             super.onDataChanged();
+
+            if (getItemCount() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                animationView.setVisibility(View.VISIBLE);
+                layout.setBackgroundColor(Color.parseColor("#406AA8"));
+                Toast.makeText(TrackDashboardActivity.this, "No data added yet pls come back later thank you", Toast.LENGTH_SHORT).show();
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                animationView.setVisibility(View.GONE);
+                    layout.setBackgroundColor(Color.parseColor("#ffffff"));
+
+            }
             if (pDialog != null) {
                 pDialog.dismiss();
             }
@@ -124,8 +141,10 @@ public class TrackDashboardActivity extends AppCompatActivity {
 
         swipeRefreshLayout = findViewById(R.id.swipeHomeLayout);
         recyclerView = findViewById(R.id.recycler_books);
+        animationView = findViewById(R.id.animationView);
         // assigning ID of the toolbar to a variable
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layout = (RelativeLayout) findViewById(R.id.main_content);
 
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
