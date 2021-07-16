@@ -2,7 +2,6 @@ package com.gh.sammie.trackproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -78,11 +77,14 @@ public class UserDashboardActivity extends AppCompatActivity {
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User user = snapshot.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
-                        Log.d("DASHBOARD", "onDataChange: " + user.getName() + user.getUid());
-                        Intent mainIntent = new Intent(UserDashboardActivity.this, SearchActivity.class);
-                        Common.currentUser = user;
-                        startActivity(mainIntent);
+//                        User user = snapshot.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
+//                        Log.d("DASHBOARD", "onDataChange: " + user.getName() + user.getUid());
+//                        Intent mainIntent = new Intent(UserDashboardActivity.this, SearchActivity.class);
+//                        Common.currentUser = user;
+//                        startActivity(mainIntent);
+                        Intent intent = new Intent(UserDashboardActivity.this, SearchActivity.class);
+                        intent.putExtra("SearchId", "Freebies");// send food Id to new new act.
+                        startActivity(intent);
 
                     }
 

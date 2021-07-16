@@ -10,13 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackProject">
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity">
+
+        </activity>
         <activity android:name=".GoodsDetailPage" />
         <activity
             android:name=".TrackDashboardActivity"
             android:parentActivityName=".UserDashboardActivity" />
-        <activity android:name=".UserProfileActivity" />
-        <activity android:name=".UserDashboardActivity" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:orientation="vertical" />
+        <activity
+            android:name=".UserDashboardActivity"
+            android:orientation="vertical" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

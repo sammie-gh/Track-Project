@@ -24,7 +24,6 @@ import com.gh.sammie.trackproject.model.Goods;
 import com.gh.sammie.trackproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -65,15 +64,15 @@ public class TrackDashboardActivity extends AppCompatActivity {
             } else bookTitle = model.getName().trim();
 
             viewHolder.txtBooktName.setText(bookTitle);
-            viewHolder.txtDescription.setText(model.getDescription());
+            viewHolder.txtDescription.setText("Description : " + model.getDescription());
 //            viewHolder.txtBooktName.setTextSize(20);
 
-            viewHolder.item_price.setText("Clearance Charge: ₵ " + model.getPrice());
+            viewHolder.item_price.setText("Clearance Charge: GH ₵ " + model.getPrice());
             viewHolder.txt_status.setText("status: " + model.getStatus());
             viewHolder.txt_location.setText(model.getLocation());
             viewHolder.txt_date.setText("Container Arrived on: " + model.getDate());
             viewHolder.txt_terminal.setText("Terminal: " + model.getTerminal());
-            Picasso.get().load(model.getImage()).into(viewHolder.bookImageView);
+//            Picasso.get().load(model.getImage()).into(viewHolder.bookImageView);
 
 //            TextDrawable drawablePrice = TextDrawable.builder()
 //                    .buildRoundRect("free", Color.RED, 10); // radius in px

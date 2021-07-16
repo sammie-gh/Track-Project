@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
     implementation 'com.google.firebase:firebase-messaging'
-//     implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
+     implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation project(':libs:paywithslydepay')

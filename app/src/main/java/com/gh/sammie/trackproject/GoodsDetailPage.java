@@ -24,6 +24,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.apps.norris.paywithslydepay.core.PayWithSlydepay;
 import com.gh.sammie.trackproject.model.Goods;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +46,7 @@ public class GoodsDetailPage extends AppCompatActivity {
     private static final String TAG = "Download Directory";
     private static CoordinatorLayout FoodLayout;
     private DatabaseReference downlaoders;
-    private TextView book_name, book_price, book_description;
+    private TextView book_name, book_price, book_description, txt_payment;
     private ImageView book_image;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private String selectedPrice, selectedName, selectedDesc;
@@ -101,6 +104,7 @@ public class GoodsDetailPage extends AppCompatActivity {
         book_description = findViewById(R.id.book_description);
         book_price = findViewById(R.id.book_Price);
         book_name = findViewById(R.id.book_name);
+        txt_payment = findViewById(R.id.txt_payment);
         book_image = findViewById(R.id.img_book);
         btn_download = findViewById(R.id.btn_download);
 
@@ -169,6 +173,7 @@ public class GoodsDetailPage extends AppCompatActivity {
                 collapsingToolbarLayout.setTitle(currentGoods.getName());
                 book_price.setText("₵" + currentGoods.getPrice());
                 book_name.setText(currentGoods.getName());
+                txt_payment.setText("payment status: " + currentGoods.getPaymentStatus());
                 book_description.setText(currentGoods.getDescription());
 
 
@@ -225,23 +230,23 @@ public class GoodsDetailPage extends AppCompatActivity {
 //        DBpay = database.getReference().child("Goods").child(mAuth.getCurrentUser().getUid());
 //        mUserDatabase = database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
 //        database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-//        DBpay.child("TRACK ID").child("Payment").child(mAuth.getCurrentUser().getUid())
-//                .setValue("PAID")
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-////                        successPaymentSweetDialog("Payment verified successfully !");
-//
-//                    }
-//
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//                Toast.makeText(GoodsDetailPage.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+        books.child("TRACK ID").child("Payment").child(mAuth.getCurrentUser().getUid())
+                .setValue("PAID")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+//                        successPaymentSweetDialog("Payment verified successfully !");
+
+                    }
+
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(GoodsDetailPage.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void userLogVer() {
