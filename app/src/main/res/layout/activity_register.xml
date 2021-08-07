@@ -75,11 +75,11 @@
         android:paddingStart="20dp" />
 
     <Button
+        android:id="@+id/signup"
         android:layout_width="320dp"
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
-        android:id="@+id/signup"
         android:background="@drawable/button"
         android:text="Sign Up"
         android:textColor="#fff" />

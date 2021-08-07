@@ -162,14 +162,14 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/icon_3" />
+                    app:srcCompat="@drawable/search_icon_design" />
 
                 <TextView
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Importer"
+                    android:text="Search"
                     android:textAlignment="center"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -180,11 +180,11 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/img_report_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:onClick="exporterClick"
                 android:orientation="vertical">
 
                 <ImageView
@@ -197,7 +197,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="Exporter"
+                    android:text="Report"
                     android:textAlignment="center"
                     android:textStyle="bold" />
             </LinearLayout>

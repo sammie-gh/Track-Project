@@ -1,6 +1,5 @@
 package com.gh.sammie.trackproject;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,8 +21,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.gh.sammie.trackproject.ViewHolder.GoodsViewHolder;
+import com.gh.sammie.trackproject.ViewHolder.PaymentViewHolder;
 import com.gh.sammie.trackproject.model.Goods;
+import com.gh.sammie.trackproject.model.Payment;
 import com.gh.sammie.trackproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,7 +32,7 @@ import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class TrackDashboardActivity extends AppCompatActivity {
+public class ReportPage extends AppCompatActivity {
     private Button refreshButton;
     private String current_user_id = "", CurrentGoodName;
     private RecyclerView recyclerView;
@@ -47,62 +47,49 @@ public class TrackDashboardActivity extends AppCompatActivity {
     public static final int SLYDEPAY_REQUEST_CODE = 9999;
     private LottieAnimationView animationView;
 
-    private FirebaseRecyclerOptions<Goods> options = new FirebaseRecyclerOptions.Builder<Goods>()
+
+    private FirebaseRecyclerOptions<Payment> options = new FirebaseRecyclerOptions.Builder<Payment>()
 
 
-            .setQuery(FirebaseDatabase.getInstance().getReference().child("Goods").child(Common.currentUser.getUid()),
-                    Goods.class)
+            .setQuery(FirebaseDatabase.getInstance().getReference().child("Payment").child(Common.currentUser.getUid()),
+                    Payment.class)
             .build();
 
-    private FirebaseRecyclerAdapter<Goods, GoodsViewHolder> adapter = new FirebaseRecyclerAdapter<Goods, GoodsViewHolder>(options) {
+
+    private FirebaseRecyclerAdapter<Payment, PaymentViewHolder> adapter = new FirebaseRecyclerAdapter<Payment, PaymentViewHolder>(options) {
         @Override
-        protected void onBindViewHolder(@NonNull GoodsViewHolder viewHolder, int position, @NonNull final Goods model) {
+        protected void onBindViewHolder(@NonNull PaymentViewHolder viewHolder, int position, @NonNull final Payment model) {
 
             //get values from model
-            String bookTitle = model.getName().trim();
+            String bookTitle = model.getId().trim();
             if (bookTitle.length() > 20) {
                 bookTitle = bookTitle.substring(0, 12);
                 bookTitle = bookTitle + "...";
-            } else bookTitle = model.getName().trim();
+            } else bookTitle = model.getId().trim();
 
             viewHolder.txtBooktName.setText(bookTitle);
-            viewHolder.txtDescription.setText("Description : " + model.getDescription());
+            viewHolder.txtDescription.setText("Desc: " + model.getDesc());
 //            viewHolder.txtBooktName.setTextSize(20);
-
-            viewHolder.item_price.setText("Clearance Charge: GH ₵ " + model.getPrice());
+            viewHolder.item_price.setText("Charge: GH ₵ " + model.getPrice());
             viewHolder.txt_status.setText("status: " + model.getStatus());
-            viewHolder.txt_location.setText(model.getLocation());
-            viewHolder.txt_date.setText("Container Arrived on: " + model.getDate());
-            viewHolder.txt_terminal.setText("Terminal: " + model.getTerminal());
-//            Picasso.get().load(model.getImage()).into(viewHolder.bookImageView);
+            viewHolder.txt_email.setText("Contact: " + model.getEmail());
 
-//            TextDrawable drawablePrice = TextDrawable.builder()
-//                    .buildRoundRect("free", Color.RED, 10); // radius in px
-//            viewHolder.itemPrice.setImageDrawable(drawablePrice);
 
-//            viewHolder.btn_pay.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-////                    slydePayment(model.getPrice(), model.getName(), model.getDestination());
-//
-//                }
+//            viewHolder.setItemClickListener((view, position1, isLongClick) -> {
+////                    Get category id and send to new activity
+//                Intent list = new Intent(TrackDashboardActivity.this, GoodsDetailPage.class);
+//                list.putExtra("BookIdFree", adapter.getRef(position1).getKey());
+////                finish();
+//                startActivity(list);
 //            });
-
-            viewHolder.setItemClickListener((view, position1, isLongClick) -> {
-//                    Get category id and send to new activity
-                Intent list = new Intent(TrackDashboardActivity.this, GoodsDetailPage.class);
-                list.putExtra("BookIdFree", adapter.getRef(position1).getKey());
-//                finish();
-                startActivity(list);
-            });
 
         }
 
         @Override
-        public GoodsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public PaymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.book_items_list, parent, false);
-            return new GoodsViewHolder(itemView);
+                    .inflate(R.layout.payment_items_list, parent, false);
+            return new PaymentViewHolder(itemView);
 
         }
 
@@ -114,11 +101,11 @@ public class TrackDashboardActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.GONE);
                 animationView.setVisibility(View.VISIBLE);
                 layout.setBackgroundColor(Color.parseColor("#406AA8"));
-                Toast.makeText(TrackDashboardActivity.this, "No data added yet pls come back later thank you", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportPage.this, "No Payment found ", Toast.LENGTH_LONG).show();
             } else {
                 recyclerView.setVisibility(View.VISIBLE);
                 animationView.setVisibility(View.GONE);
-                    layout.setBackgroundColor(Color.parseColor("#ffffff"));
+                layout.setBackgroundColor(Color.parseColor("#ffffff"));
 
             }
             if (pDialog != null) {
@@ -127,12 +114,10 @@ public class TrackDashboardActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_track_dashboard);
-
+        setContentView(R.layout.activity_report_page);
         //Init
         mAuth = FirebaseAuth.getInstance();
 
@@ -152,6 +137,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
         /*Load Goods*/
         loadBooks();
 
+
         swipeRefreshLayout.setColorSchemeResources(R.color.card2, R.color.card1,
                 R.color.colorButtonPress);
 
@@ -165,11 +151,10 @@ public class TrackDashboardActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(TrackDashboardActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(ReportPage.this));
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(),
                 R.anim.layot_fall_down);
         recyclerView.setLayoutAnimation(controller);
-
 
     }
 
@@ -209,7 +194,7 @@ public class TrackDashboardActivity extends AppCompatActivity {
     }
 
     private void showDialog() {
-        pDialog = new SweetAlertDialog(TrackDashboardActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog = new SweetAlertDialog(ReportPage.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading");
         pDialog.setCanceledOnTouchOutside(false);
@@ -224,75 +209,6 @@ public class TrackDashboardActivity extends AppCompatActivity {
                 .setContentText("Something went wrong! \n Please check Your connection")
                 .show();
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == SLYDEPAY_REQUEST_CODE && data != null) {
-//            if (resultCode == RESULT_OK) {
-//                //change access
-//                savePurchaseValueToDatabase();
-//
-//            } else if (resultCode == Activity.RESULT_CANCELED) {
-//                Toast.makeText(TrackDashboardActivity.this, "Payment failed", Toast.LENGTH_SHORT).show();
-//
-//
-//            } else if (resultCode == Activity.RESULT_FIRST_USER)
-//                Toast.makeText(TrackDashboardActivity.this, "Payment was cancelled by user", Toast.LENGTH_SHORT).show();
-//
-//
-//        }
-//
-//
-//    }
-
-
-//    private void getBookDetail(String bookId) {
-//        DBpay.child(bookId).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                currentBook = dataSnapshot.getValue(Goods.class);
-//
-// ;
-//
-//                book_price.setText("₵" + currentBook.getPrice());
-//                book_name.setText(currentBook.getName());
-//                book_description.setText(currentBook.getDescription());
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseErro
-//            r databaseError) {
-//
-//            }
-//        });
-//    }
-
-//    private void savePurchaseValueToDatabase() {
-//        DBpay = database.getReference().child("Goods").child(mAuth.getCurrentUser().getUid());
-////        mUserDatabase = database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-////        database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-//        DBpay.child("TRACK ID").child("Payment").child(mAuth.getCurrentUser().getUid())
-//                .setValue("PAID")
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-////                        successPaymentSweetDialog("Payment verified successfully !");
-//
-//                    }
-//
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//                Toast.makeText(TrackDashboardActivity.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//    }
 
 
 }

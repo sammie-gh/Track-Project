@@ -131,6 +131,7 @@
                                     android:layout_marginStart="50dp"
                                     android:fontFamily="@font/montserratmedium"
                                     android:padding="12dp"
+                                    android:visibility="gone"
                                     android:text="payment status: "
                                     android:textColor="@color/textColor"
                                     android:textSize="18sp"

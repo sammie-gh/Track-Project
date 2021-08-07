@@ -22,7 +22,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class UserDashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private LinearLayout btn_track, btn_profile;
+    private LinearLayout btn_track, btn_profile,report_btn;
     private ImageView img_track_btn;
     private DatabaseReference mDatabase;
 
@@ -31,19 +31,19 @@ public class UserDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dashboard);
 
-        //Inits
+                    /*Init*/
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         btn_track = findViewById(R.id.btn_track);
         img_track_btn = findViewById(R.id.img_track_btn);
         btn_profile = findViewById(R.id.btn_profile);
+        report_btn = findViewById(R.id.img_report_btn);
 
 
-        /* On click buttons*/
+        /* On Click buttons*/
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(UserDashboardActivity.this, UserProfileActivity.class);
                 startActivity(intent);
             }
@@ -60,9 +60,27 @@ public class UserDashboardActivity extends AppCompatActivity {
                         Intent mainIntent = new Intent(UserDashboardActivity.this, TrackDashboardActivity.class);
                         Common.currentUser = user;
                         startActivity(mainIntent);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
                     }
+                });
+            }
+        });
 
+        report_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user = snapshot.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
+                        Intent mainIntent = new Intent(UserDashboardActivity.this, ReportPage.class);
+                        Common.currentUser = user;
+                        startActivity(mainIntent);
+                    }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -98,9 +116,7 @@ public class UserDashboardActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 
     public void LogoutUser(View view) {
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -143,10 +159,9 @@ public class UserDashboardActivity extends AppCompatActivity {
     }
 
     public void ImporterClick(View view) {
-        Toast.makeText(this, "Action not set by admin", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(UserDashboardActivity.this, SearchActivity.class);
+        intent.putExtra("SearchId", "Freebies");// send food Id to new new act.
+        startActivity(intent);
     }
 
-    public void exporterClick(View view) {
-        Toast.makeText(this, "Action not set by admin", Toast.LENGTH_SHORT).show();
-    }
 }

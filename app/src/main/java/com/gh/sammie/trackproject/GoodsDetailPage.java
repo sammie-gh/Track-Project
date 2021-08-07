@@ -35,6 +35,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.gh.sammie.trackproject.Common.priceToString;
@@ -55,7 +58,7 @@ public class GoodsDetailPage extends AppCompatActivity {
     private LinearLayout konteenLayout, overLayout;
     private Animation fromSmall, fromNothing, forImage, togoAnime;
     private FirebaseDatabase database;
-    private DatabaseReference books;
+    private DatabaseReference books, payment;
     private SweetAlertDialog sweetAlertDialog;
     private Goods currentGoods;
     private String current_user_id = "";
@@ -79,6 +82,7 @@ public class GoodsDetailPage extends AppCompatActivity {
         //Firebase
         database = FirebaseDatabase.getInstance();
         books = database.getReference("Goods").child(mAuth.getCurrentUser().getUid());
+        payment = database.getReference("Payment").child(mAuth.getCurrentUser().getUid());
         books.keepSynced(true);
         downlaoders = database.getReference("Downloader");
 
@@ -153,6 +157,7 @@ public class GoodsDetailPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 slydePayment(selectedPrice, selectedName, selectedDesc);
+
             }
         });
 
@@ -166,10 +171,7 @@ public class GoodsDetailPage extends AppCompatActivity {
         books.child(bookId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 currentGoods = dataSnapshot.getValue(Goods.class);
-
-
                 collapsingToolbarLayout.setTitle(currentGoods.getName());
                 book_price.setText("₵" + currentGoods.getPrice());
                 book_name.setText(currentGoods.getName());
@@ -223,15 +225,21 @@ public class GoodsDetailPage extends AppCompatActivity {
 
         }
 
-
     }
 
     private void savePurchaseValueToDatabase() {
 //        DBpay = database.getReference().child("Goods").child(mAuth.getCurrentUser().getUid());
 //        mUserDatabase = database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
 //        database.getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-        books.child("TRACK ID").child("Payment").child(mAuth.getCurrentUser().getUid())
-                .setValue("PAID")
+//
+//        book_name.setText(currentGoods.getName());
+        Map<String, Object> payment_details = new HashMap<String, Object>();
+        payment_details.put("status", "paid");
+        payment_details.put("desc", currentGoods.getDescription());
+        payment_details.put("price", currentGoods.getPrice());
+        payment_details.put("id", currentGoods.getName());
+        payment_details.put("email", mAuth.getCurrentUser().getEmail());
+        payment.child(currentGoods.getName()).setValue(payment_details)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
